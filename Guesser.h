@@ -10,7 +10,7 @@ class Guesser
 private:
   string m_secret;
   unsigned int m_remaining;
-
+  bool locked;
   /*
     Returns an whole number representing the distance between the guess,
     provided as an argument, and the secret. The distance represents the number
@@ -32,11 +32,10 @@ public:
     otherwise, it will be truncated at that length.
   */
   Guesser(string secret);
-
   /*
     Determines and returns whether the provided guess matches the secret
     phrase. However, the function also returns false if the secret is locked,
-    which happens if either (or both): 
+    which happens if either (or both):
      (A) there are no remaining guesses allowed
      (B) the function detects brute force, as indicated by a guess that has a
          distance greater than 2 from the secret
@@ -53,8 +52,11 @@ public:
     again acknowledge a correct match. However, whenever an unlocked secret
     is guessed with a true match, the guesses remaining reset to three (3).
   */
+  void update_remaining(int remain);
+  void update_lock(bool lock);
   unsigned int remaining();
-
+  bool is_locked();
+  int m_secret_length(){return m_secret.length();}
 
 };
 #endif
